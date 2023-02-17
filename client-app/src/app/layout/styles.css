@@ -5,9 +5,13 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color:azure !important;
 }
-
+.ui.inverted.top.fixed.menu {
+  background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(114,114,212,1) 35%, rgba(0,212,255,1) 100%) !important;
+}
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
