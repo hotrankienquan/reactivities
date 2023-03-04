@@ -4,6 +4,7 @@ import ActivityList from './ActivityList';
 import { observer } from "mobx-react-lite";
 import { useStore } from "../../../app/stores/store";
 import LoadingComponent from '../../../app/layout/LoadingComponent';
+import ActivityFilters from './ActivityFilters';
 export default observer(function ActivityDashboard() {
   // bọc mobx là một HOC observer cho toàn bộ component 
 
@@ -21,7 +22,7 @@ if (activityStore.loadingInitial) return <LoadingComponent content='Loading app.
         />
       </Grid.Column>
       <Grid.Column width='6'>
-          <h2>Activity filters</h2>
+          <ActivityFilters />
       </Grid.Column>
       </Grid>
   )
