@@ -1,8 +1,11 @@
-import { createBrowserRouter, RouteObject } from "react-router-dom";
+import { createBrowserRouter, Navigate, RouteObject } from "react-router-dom";
 import App from "../layout/App";
 import ActivityDashboard from "../../features/activity/dashboard/ActivityDashboard";
 import ActivityDetails from "../../features/activity/details/ActivityDetails";
 import ActivityForm from "../../features/activity/form/ActivityForm";
+import TestErrors from "../../features/errors/TestError";
+import NotFound from "../../features/errors/NotFound";
+import ServerError from "../../features/errors/ServerError";
 
 export const routes: RouteObject[] = [
   // RouteObject[] : mảng gồm các object 
@@ -13,7 +16,11 @@ export const routes: RouteObject[] = [
             {path: 'activities', element: <ActivityDashboard />},
             {path: 'activities/:id', element: <ActivityDetails />},
             {path: 'createActivity', element: <ActivityForm key='create' />},
-            {path: 'manage/:id', element: <ActivityForm key='manage' />},
+            { path: 'manage/:id', element: <ActivityForm key='manage' /> },
+            {path: 'errors', element: <TestErrors />},
+            {path: 'not-found', element: <NotFound />},
+            {path: 'server-error', element: <ServerError />},
+            {path: '*', element: <Navigate replace to='/not-found' />},
         ]
     }
 ]
