@@ -59,7 +59,7 @@
 using API.Extensions;
 using Microsoft.EntityFrameworkCore;
 using Persistence;
-
+using API.Middleware;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -81,7 +81,7 @@ app.UseCors("CorsPolicy");
 app.UseAuthorization();
 
 app.MapControllers();
-
+app.UseMiddleware<ExceptionMiddleware>();
 using var scope = app.Services.CreateScope();
 var services = scope.ServiceProvider;
 
