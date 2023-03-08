@@ -16,16 +16,15 @@ export default class ActivityStore {
 
     get activitiesByDate() {
         return Array.from(this.activityRegistry.values()).sort((a, b) =>
-            Date.parse(a.date) - Date.parse(b.date))
+            // Date.parse(a.date) - Date.parse(b.date))
+            a.date!.getTime() - b.date!.getTime());
     }
-
     loadActivities = async () => {
-        this.setLoadingInitial(true)
+        this.setLoadingInitial(true);
         try {
             const activities = await agent.Activities.list();
             activities.forEach(activity => {
-                activity.date = activity.date.split('T')[0];
-                this.activityRegistry.set(activity.id, activity);
+                this.setActivity(activity);
             })
             this.setLoadingInitial(false);
         } catch (error) {
@@ -33,6 +32,7 @@ export default class ActivityStore {
             this.setLoadingInitial(false);
         }
     }
+    
     loadActivity = async (id: string) => {
         let activity = this.getActivity(id);
         if (activity) {
@@ -55,7 +55,8 @@ export default class ActivityStore {
     }
 
     private setActivity = (activity: Activity) => {
-        activity.date = activity.date.split('T')[0];
+        // activity.date = activity.date.split('T')[0];
+        activity.date = new Date(activity.date!);
         this.activityRegistry.set(activity.id, activity);
     }
 
@@ -133,12 +134,11 @@ export default class ActivityStore {
     }
 
     get groupedActivities(): [string, Activity[]][] {
-        const sortedActivities = Array.from(this.activityRegistry.values()).sort((a, b) =>
-            Date.parse(a.date) - Date.parse(b.date));
 
         return Object.entries(
-            sortedActivities.reduce((activities, activity) => {
-                const date = activity.date.split('T')[0];
+            this.activitiesByDate.reduce((activities, activity) => {
+                const date = activity.date!.toISOString().split('T')[0];
+            
                 activities[date] = activities[date] ? [...activities[date], activity] : [activity];
                 return activities;
             }, {} as {[key: string]: Activity[]})
